@@ -7,16 +7,14 @@ import '/ui/widgets/animated_screen_transition.dart';
 import '../Library/library_combined.dart';
 
 import '../Library/library.dart';
-import '../Search/search_screen.dart';
 import '../Settings/settings_screen_controller.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
 import '../../navigator.dart';
 import '../../widgets/content_list_widget.dart';
-import '../../widgets/quickpickswidget.dart';
+
 import '../../widgets/shimmer_widgets/home_shimmer.dart';
 import 'home_screen_controller.dart';
-import '../Settings/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -92,14 +90,7 @@ class Body extends StatelessWidget {
   });
 
   String _getGreeting() {
-    var hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Good morning';
-    }
-    if (hour < 17) {
-      return 'Good afternoon';
-    }
-    return 'Good evening';
+    return 'Athena Tunes';
   }
 
   @override
@@ -193,23 +184,52 @@ class Body extends StatelessWidget {
                                 .isContentFetched.value
                             ? [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, bottom: 20.0, top: 10.0),
-                                  child: Text(
-                                    _getGreeting(),
-                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
+                                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20.0, top: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _getGreeting(),
+                                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.settings),
+                                        onPressed: () {
+                                          Get.toNamed(ScreenNavigationSetup.settingsScreen, id: ScreenNavigationSetup.id);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(ScreenNavigationSetup.searchScreen,
+                                          id: ScreenNavigationSetup.id);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.search, color: Colors.white70),
+                                          const SizedBox(width: 12),
+                                          Text(
+                                            'searchDes'.tr,
+                                            style: const TextStyle(color: Colors.white70, fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Obx(() {
-                                  final scrollController = ScrollController();
-                                  homeScreenController.contentScrollControllers
-                                      .add(scrollController);
-                                  return QuickPicksWidget(
-                                      content:
-                                          homeScreenController.quickPicks.value,
-                                      scrollController: scrollController);
-                                }),
+                                // Removed QuickPicksWidget per user request
                                 ...getWidgetList(
                                     homeScreenController.middleContent,
                                     homeScreenController),
@@ -246,24 +266,10 @@ class Body extends StatelessWidget {
       );
     } else if (homeScreenController.tabIndex.value == 1) {
       return settingsScreenController.isBottomNavBarEnabled.isTrue
-          ? const SearchScreen()
-          : const SongsLibraryWidget();
-    } else if (homeScreenController.tabIndex.value == 2) {
-      return settingsScreenController.isBottomNavBarEnabled.isTrue
           ? const CombinedLibrary()
-          : const PlaylistNAlbumLibraryWidget(isAlbumContent: false);
-    } else if (homeScreenController.tabIndex.value == 3) {
-      return settingsScreenController.isBottomNavBarEnabled.isTrue
-          ? const SettingsScreen(isBottomNavActive: true)
-          : const PlaylistNAlbumLibraryWidget();
-    } else if (homeScreenController.tabIndex.value == 4) {
-      return const LibraryArtistWidget();
-    } else if (homeScreenController.tabIndex.value == 5) {
-      return const SettingsScreen();
+          : const SongsLibraryWidget();
     } else {
-      return Center(
-        child: Text("${homeScreenController.tabIndex.value}"),
-      );
+      return const SizedBox.shrink();
     }
   }
 

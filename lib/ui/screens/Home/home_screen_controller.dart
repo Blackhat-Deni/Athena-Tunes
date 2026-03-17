@@ -62,21 +62,12 @@ class HomeScreenController extends GetxController {
     if (homeScreenData.keys.isNotEmpty) {
       final String quickPicksType = homeScreenData.get("quickPicksType");
       final List quickPicksData = homeScreenData.get("quickPicks");
-      final List middleContentData = homeScreenData.get("middleContent") ?? [];
-      final List fixedContentData = homeScreenData.get("fixedContent") ?? [];
       quickPicks.value = QuickPicks(
           quickPicksData.map((e) => MediaItemBuilder.fromJson(e)).toList(),
           title: quickPicksType);
-      middleContent.value = middleContentData
-          .map((e) => e["type"] == "Album Content"
-              ? AlbumContent.fromJson(e)
-              : PlaylistContent.fromJson(e))
-          .toList();
-      fixedContent.value = fixedContentData
-          .map((e) => e["type"] == "Album Content"
-              ? AlbumContent.fromJson(e)
-              : PlaylistContent.fromJson(e))
-          .toList();
+      // Clear dynamically fetched DB content per user request
+      middleContent.value = [];
+      fixedContent.value = [];
       isContentFetched.value = true;
       printINFO("Loaded from offline db");
       return true;
@@ -158,8 +149,9 @@ class HomeScreenController extends GetxController {
             title: "Quick picks");
       }
 
-      middleContent.value = _setContentList(middleContentTemp);
-      fixedContent.value = _setContentList(homeContentListMap);
+      // Clearing all dynamic content per user request to hide everything
+      middleContent.value = [];
+      fixedContent.value = [];
 
       isContentFetched.value = true;
 

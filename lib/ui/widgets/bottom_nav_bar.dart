@@ -23,16 +23,8 @@ class BottomNavBar extends StatelessWidget {
                 label: modifyNgetlabel('home'.tr),
               ),
               NavigationDestination(
-                icon: const Icon(Icons.search),
-                label: modifyNgetlabel('search'.tr),
-              ),
-              NavigationDestination(
                 icon: const Icon(Icons.library_music),
                 label: modifyNgetlabel('library'.tr),
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.settings),
-                label: modifyNgetlabel('settings'.tr),
               ),
             ]));
   }

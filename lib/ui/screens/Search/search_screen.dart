@@ -55,12 +55,31 @@ class SearchScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: topPadding, left: 5),
                 child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "search".tr,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Theme.of(context).textTheme.titleMedium?.color,
+                            ),
+                            onPressed: () {
+                              if (Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.canPop() == true) {
+                                Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.pop();
+                              } else {
+                                Get.back();
+                              }
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "search".tr,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,

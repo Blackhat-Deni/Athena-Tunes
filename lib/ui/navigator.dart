@@ -10,6 +10,7 @@ import 'screens/Album/album_screen.dart';
 import 'screens/Playlist/playlist_screen.dart';
 import 'screens/Search/search_result_screen.dart';
 import 'screens/Search/search_screen.dart';
+import 'screens/Settings/settings_screen.dart';
 
 class ScreenNavigationSetup {
   ScreenNavigationSetup._();
@@ -21,6 +22,7 @@ class ScreenNavigationSetup {
   static const artistScreen = '/artistScreen';
   static const albumScreen = '/albumScreen';
   static const playlistScreen = '/playlistScreen';
+  static const settingsScreen = '/settingsScreen';
 }
 
 class ScreenNavigation extends StatelessWidget {
@@ -58,6 +60,10 @@ class ScreenNavigation extends StatelessWidget {
             case ScreenNavigationSetup.searchScreen:
               return GetPageRoute(
                   page: () => const SearchScreen(), settings: settings);
+            
+            case ScreenNavigationSetup.settingsScreen:
+              return GetPageRoute(
+                  page: () => const SettingsScreen(isBottomNavActive: false), settings: settings);
             
             case ScreenNavigationSetup.searchResultScreen:
               return GetPageRoute(

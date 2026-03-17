@@ -15,6 +15,7 @@ import '/ui/widgets/link_piped.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/utils/theme_controller.dart';
+import '../../navigator.dart';
 import 'components/custom_expansion_tile.dart';
 import 'settings_screen_controller.dart';
 
@@ -34,12 +35,32 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "settings".tr,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+          Row(
+            children: [
+              if (!isBottomNavActive)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                    ),
+                    onPressed: () {
+                      if (Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.canPop() == true) {
+                        Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.pop();
+                      } else {
+                        Get.back();
+                      }
+                    },
+                  ),
+                ),
+              Expanded(
+                child: Text(
+                  "settings".tr,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+            ],
           ),
           Expanded(
               child: ListView(
