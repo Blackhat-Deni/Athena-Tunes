@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:athena_tunes/ui/utils/theme_controller.dart';
 
 class CustSwitch extends StatelessWidget {
   const CustSwitch({super.key, this.onChanged, required this.value});
@@ -13,7 +13,7 @@ class CustSwitch extends StatelessWidget {
         Get.find<ThemeController>().themedata.value!.primaryColor ==
             Colors.white;
     return Switch(
-        activeColor: Colors.white,
+        activeThumbColor: Colors.white,
         activeTrackColor: isLightMode ? Colors.grey : null,
         inactiveTrackColor: isLightMode ? Colors.grey : null,
         inactiveThumbColor:

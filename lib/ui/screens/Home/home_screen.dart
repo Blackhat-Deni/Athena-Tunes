@@ -5,7 +5,7 @@ import '../Search/components/desktop_search_bar.dart';
 import '/ui/screens/Search/search_screen_controller.dart';
 import '/ui/widgets/animated_screen_transition.dart';
 import '../Library/library_combined.dart';
-import '../../widgets/side_nav_bar.dart';
+
 import '../Library/library.dart';
 import '../Search/search_screen.dart';
 import '../Settings/settings_screen_controller.dart';
@@ -62,8 +62,8 @@ class HomeScreen extends StatelessWidget {
                                 Get.toNamed(ScreenNavigationSetup.searchScreen,
                                     id: ScreenNavigationSetup.id);
                               }
-                              // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
-                              //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
+                              // file:///data/user/0/com.example.athena_tunes/cache/libCachedImageData/
+                              //file:///data/user/0/com.example.athena_tunes/cache/just_audio_cache/
                             },
                             child: Icon(homeScreenController.tabIndex.value == 2
                                 ? Icons.add
@@ -74,31 +74,15 @@ class HomeScreen extends StatelessWidget {
                 )
               : const SizedBox.shrink(),
         ),
-        body: Obx(
-          () => Row(
-            children: <Widget>[
-              // create a navigation rail
-              settingsScreenController.isBottomNavBarEnabled.isFalse
-                  ? const SideNavBar()
-                  : const SizedBox(
-                      width: 0,
-                    ),
-              //const VerticalDivider(thickness: 1, width: 2),
-              Expanded(
-                child: Obx(() => AnimatedScreenTransition(
-                    enabled: settingsScreenController
-                        .isTransitionAnimationDisabled.isFalse,
-                    resverse: homeScreenController.reverseAnimationtransiton,
-                    horizontalTransition:
-                        settingsScreenController.isBottomNavBarEnabled.isTrue,
-                    child: Center(
-                      key: ValueKey<int>(homeScreenController.tabIndex.value),
-                      child: const Body(),
-                    ))),
-              ),
-            ],
-          ),
-        ));
+        body: Obx(() => AnimatedScreenTransition(
+            enabled: settingsScreenController
+                .isTransitionAnimationDisabled.isFalse,
+            resverse: homeScreenController.reverseAnimationtransiton,
+            horizontalTransition: true,
+            child: Center(
+              key: ValueKey<int>(homeScreenController.tabIndex.value),
+              child: const Body(),
+            ))));
   }
 }
 
@@ -106,6 +90,17 @@ class Body extends StatelessWidget {
   const Body({
     super.key,
   });
+
+  String _getGreeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good morning';
+    }
+    if (hour < 17) {
+      return 'Good afternoon';
+    }
+    return 'Good evening';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +114,7 @@ class Body extends StatelessWidget {
             : size.height < 750
                 ? 80.0
                 : 85.0;
-    final leftPadding =
-        settingsScreenController.isBottomNavBarEnabled.isTrue ? 20.0 : 5.0;
+    final leftPadding = 20.0;
     if (homeScreenController.tabIndex.value == 0) {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding),
@@ -198,6 +192,15 @@ class Body extends StatelessWidget {
                         final items = homeScreenController
                                 .isContentFetched.value
                             ? [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15.0, bottom: 20.0, top: 10.0),
+                                  child: Text(
+                                    _getGreeting(),
+                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                                 Obx(() {
                                   final scrollController = ScrollController();
                                   homeScreenController.contentScrollControllers

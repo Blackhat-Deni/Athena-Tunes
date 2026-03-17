@@ -6,8 +6,8 @@
 
 <img src="https://github.com/anandnet/Harmony-Music/blob/main/cover.png" width="1200" >
 
-# Harmony Music
-A cross platform app for music streaming made with Flutter(Android, Windows, linux).
+# Athena Tunes
+A cross platform app for music streaming made with Flutter (Android, Windows, Linux).
 
 # Features
 * Ability to play song from Ytube/Ytube Music.
@@ -49,7 +49,7 @@ You can also help us in translation, click status image or <a href="https://host
 
 # License
 ```
-Harmony Music is a free software licensed under GPL v3.0 with following condition.
+Athena Tunes is a free software licensed under GPL v3.0 with following condition.
 
 - Copied/Modified version of this software can not be used for 'non-free' and profit purposes.
 - You can not publish copied/modified version of this app on closed source app repository

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:athena_tunes/ui/screens/Home/home_screen_controller.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -9,11 +9,13 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeScreenController = Get.find<HomeScreenController>();
     return Obx(() => NavigationBar(
+            height: 70,
+            elevation: 0,
             onDestinationSelected: homeScreenController.onBottonBarTabSelected,
             selectedIndex: homeScreenController.tabIndex.toInt(),
             backgroundColor: Theme.of(context).primaryColor,
-            indicatorColor: Theme.of(context).colorScheme.secondary,
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            indicatorColor: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
             destinations: [
               NavigationDestination(
                 selectedIcon: const Icon(Icons.home),

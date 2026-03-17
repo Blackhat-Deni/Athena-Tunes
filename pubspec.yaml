@@ -1,5 +1,5 @@
-name: harmonymusic
-description: A cross platform app for music streaming.
+name: athena_tunes
+description: Athena Tunes - A cross platform app for music streaming.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -45,7 +45,7 @@ dependencies:
   flutter_lyric: ^2.0.4+6
   flutter_slidable: ^3.1.2
   get: ^4.7.1
-  google_fonts: ^6.1.0
+  google_fonts: ^6.2.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   html: ^0.15.6

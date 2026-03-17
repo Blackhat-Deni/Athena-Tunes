@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/services/permission_service.dart';
+import 'package:athena_tunes/services/permission_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -84,8 +84,7 @@ class SettingsScreenController extends GetxController {
         : appLang == "zh_Hans"
             ? "zh-CN"
             : appLang;
-    isBottomNavBarEnabled.value =
-        isDesktop ? false : (setBox.get("isBottomNavBarEnabled") ?? false);
+    isBottomNavBarEnabled.value = true;
     noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
     isTransitionAnimationDisabled.value =
         setBox.get("isTransitionAnimationDisabled") ?? false;
@@ -160,20 +159,7 @@ class SettingsScreenController extends GetxController {
   }
 
   void enableBottomNavBar(bool val) {
-    final homeScrCon = Get.find<HomeScreenController>();
-    final playerCon = Get.find<PlayerController>();
-    if (val) {
-      homeScrCon.onSideBarTabSelected(3);
-      isBottomNavBarEnabled.value = true;
-    } else {
-      isBottomNavBarEnabled.value = false;
-      homeScrCon.onSideBarTabSelected(5);
-    }
-    if (!Get.find<PlayerController>().initFlagForPlayer) {
-      playerCon.playerPanelMinHeight.value =
-          val ? 75.0 : 75.0 + Get.mediaQuery.viewPadding.bottom;
-    }
-    setBox.put("isBottomNavBarEnabled", val);
+    isBottomNavBarEnabled.value = true;
   }
 
   void toggleSlidableAction(bool val) {

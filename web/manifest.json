@@ -1,11 +1,11 @@
 {
-    "name": "harmonymusic",
-    "short_name": "harmonymusic",
+    "name": "Athena Tunes",
+    "short_name": "Athena Tunes",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Athena Tunes - A cross platform app for music streaming.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

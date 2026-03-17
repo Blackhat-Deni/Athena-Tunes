@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/utils/helper.dart';
-import 'package:harmonymusic/utils/lang_mapping.dart';
+import 'package:athena_tunes/utils/helper.dart';
+import 'package:athena_tunes/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';
@@ -166,19 +166,7 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (!isDesktop)
-                    ListTile(
-                        contentPadding:
-                            const EdgeInsets.only(left: 5, right: 10),
-                        title: Text("enableBottomNav".tr),
-                        subtitle: Text("enableBottomNavDes".tr,
-                            style: Theme.of(context).textTheme.bodyMedium),
-                        trailing: Obx(
-                          () => CustSwitch(
-                              value: settingsController
-                                  .isBottomNavBarEnabled.isTrue,
-                              onChanged: settingsController.enableBottomNavBar),
-                        )),
+
                   ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
                       title: Text("disableTransitionAnimation".tr),
@@ -680,7 +668,7 @@ class SettingsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Harmony Music",
+                          "Athena Tunes",
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Text(settingsController.currentVersion,

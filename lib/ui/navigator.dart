@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/artist.dart';
+import 'package:athena_tunes/models/album.dart';
+import 'package:athena_tunes/models/artist.dart';
 
-import 'package:harmonymusic/ui/screens/Artists/artist_screen.dart';
-import 'package:harmonymusic/ui/screens/Home/home_screen.dart';
+import 'package:athena_tunes/ui/screens/Artists/artist_screen.dart';
+import 'package:athena_tunes/ui/screens/Home/home_screen.dart';
 
 import 'screens/Album/album_screen.dart';
 import 'screens/Playlist/playlist_screen.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '/ui/screens/Home/home_screen_controller.dart';
-import '/ui/screens/Settings/settings_screen_controller.dart';
+
 import '../utils/helper.dart';
 import '../ui/navigator.dart';
 import '../ui/player/player.dart';
@@ -24,20 +24,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     printINFO("Home");
     final PlayerController playerController = Get.find<PlayerController>();
-    final settingsScreenController = Get.find<SettingsScreenController>();
     final homeScreenController = Get.find<HomeScreenController>();
     final size = MediaQuery.of(context).size;
     final isWideScreen = size.width > 800;
-    if (!playerController.initFlagForPlayer &&
-        settingsScreenController.isBottomNavBarEnabled.isFalse) {
-      if (isWideScreen) {
-        playerController.playerPanelMinHeight.value =
-            105 + Get.mediaQuery.padding.bottom;
-      } else {
-        playerController.playerPanelMinHeight.value =
-            75 + Get.mediaQuery.padding.bottom;
-      }
-    }
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -49,9 +39,7 @@ class Home extends StatelessWidget {
             Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
           } else {
             if (homeScreenController.tabIndex.value != 0) {
-              settingsScreenController.isBottomNavBarEnabled.isTrue
-                  ? homeScreenController.onBottonBarTabSelected(0)
-                  : homeScreenController.onSideBarTabSelected(0);
+              homeScreenController.onBottonBarTabSelected(0);
             } else if (playerController.buttonState.value ==
                 PlayButtonState.playing) {
               SystemNavigator.pop();
@@ -68,13 +56,10 @@ class Home extends StatelessWidget {
         },
         child: Obx(
           () => Scaffold(
-              bottomNavigationBar: settingsScreenController
-                      .isBottomNavBarEnabled.isTrue
-                  ? ScrollToHideWidget(
+              bottomNavigationBar: ScrollToHideWidget(
                       isVisible: homeScreenController.isHomeSreenOnTop.isTrue &&
                           playerController.isPanelGTHOpened.isFalse,
-                      child: const BottomNavBar())
-                  : null,
+                      child: const BottomNavBar()),
               key: playerController.homeScaffoldkey,
               endDrawer: GetPlatform.isDesktop || isWideScreen
                   ? Container(
