@@ -25,6 +25,7 @@ class HomeScreenController extends GetxController {
   final showVersionDialog = true.obs;
   //isHomeScreenOnTop var only useful if bottom nav enabled
   final isHomeSreenOnTop = true.obs;
+  final isBottomNavVisible = true.obs;
   final List<ScrollController> contentScrollControllers = [];
   bool reverseAnimationtransiton = false;
 
@@ -283,15 +284,27 @@ class HomeScreenController extends GetxController {
       final currentRoute = getCurrentRouteName();
       final isHomeOnTop = currentRoute == '/homeScreen';
       final isResultScreenOnTop = currentRoute == '/searchResultScreen';
-      final playerCon = Get.find<PlayerController>();
+      final isAlbumOrPlaylist = currentRoute == '/albumScreen' ||
+          currentRoute == '/playlistScreen';
 
       isHomeSreenOnTop.value = isHomeOnTop;
+      isBottomNavVisible.value = !isAlbumOrPlaylist;
+
+      final playerCon = Get.find<PlayerController>();
 
       // Set miniplayer height accordingly
       if (!playerCon.initFlagForPlayer) {
         if (isHomeOnTop) {
           playerCon.playerPanelMinHeight.value = 75.0;
+        } else if (isAlbumOrPlaylist) {
+          // Nav bar is hidden, so miniplayer collapses fully.
+          // Add safe area padding to prevent clipping at the bottom.
+          Future.delayed(const Duration(milliseconds: 300), () {
+            playerCon.playerPanelMinHeight.value =
+                75.0 + Get.mediaQuery.viewPadding.bottom;
+          });
         } else {
+          // Other screens
           Future.delayed(
               isResultScreenOnTop
                   ? const Duration(milliseconds: 300)

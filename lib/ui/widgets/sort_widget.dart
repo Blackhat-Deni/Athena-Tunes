@@ -178,7 +178,7 @@ class SortWidget extends StatelessWidget {
                       () => _customIconButton(
                         isSelected:
                             controller.sortType.value == SortType.Name,
-                        icon: Icons.sort_by_alpha,
+                        icon: Icons.visibility,
                         tooltip: "sortByName".tr,
                         onPressed: () {
                           controller.onSortByName(onSort);

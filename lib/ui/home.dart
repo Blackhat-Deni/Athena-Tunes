@@ -57,8 +57,8 @@ class Home extends StatelessWidget {
         child: Obx(
           () => Scaffold(
               bottomNavigationBar: ScrollToHideWidget(
-                      isVisible: homeScreenController.isHomeSreenOnTop.isTrue &&
-                          playerController.isPanelGTHOpened.isFalse,
+                      isVisible: playerController.isPanelGTHOpened.isFalse &&
+                          homeScreenController.isBottomNavVisible.value,
                       child: const BottomNavBar()),
               key: playerController.homeScaffoldkey,
               endDrawer: GetPlatform.isDesktop || isWideScreen

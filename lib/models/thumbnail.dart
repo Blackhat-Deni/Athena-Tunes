@@ -8,7 +8,11 @@ class Thumbnail {
       : (_url.contains("=s"))
           ? "${_url.split("=s")[0]}=s$size"
           : (_url.contains("i.yti") && size >= 600)
-              ? url.replaceFirst("sddefault", "maxresdefault")
+              ? url
+                  .replaceFirst("hqdefault", "maxresdefault")
+                  .replaceFirst("mqdefault", "maxresdefault")
+                  .replaceFirst("sddefault", "maxresdefault")
+                  .replaceFirst(RegExp(r'/default\.'), '/maxresdefault.')
               : url;
   String get url => _url;
   String get high => sizewith(400); //450

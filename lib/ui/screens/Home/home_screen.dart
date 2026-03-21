@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../Search/components/desktop_search_bar.dart';
 import '/ui/screens/Search/search_screen_controller.dart';
 import '/ui/widgets/animated_screen_transition.dart';
-import '../Library/library_combined.dart';
 
 import '../Library/library.dart';
 import '../Settings/settings_screen_controller.dart';
@@ -12,6 +11,7 @@ import '/ui/player/player_controller.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
 import '../../navigator.dart';
 import '../../widgets/content_list_widget.dart';
+import '/models/playlist.dart';
 
 import '../../widgets/shimmer_widgets/home_shimmer.dart';
 import 'home_screen_controller.dart';
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
         floatingActionButton: Obx(
           () => ((homeScreenController.tabIndex.value == 0 &&
                           !GetPlatform.isDesktop) ||
-                      homeScreenController.tabIndex.value == 2) &&
+                      homeScreenController.tabIndex.value == 3) &&
                   settingsScreenController.isBottomNavBarEnabled.isFalse
               ? Obx(
                   () => Padding(
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(14))),
                             elevation: 0,
                             onPressed: () async {
-                              if (homeScreenController.tabIndex.value == 2) {
+                              if (homeScreenController.tabIndex.value == 3) {
                                 showDialog(
                                     context: context,
                                     builder: (context) =>
@@ -60,10 +60,8 @@ class HomeScreen extends StatelessWidget {
                                 Get.toNamed(ScreenNavigationSetup.searchScreen,
                                     id: ScreenNavigationSetup.id);
                               }
-                              // file:///data/user/0/com.example.athena_tunes/cache/libCachedImageData/
-                              //file:///data/user/0/com.example.athena_tunes/cache/just_audio_cache/
                             },
-                            child: Icon(homeScreenController.tabIndex.value == 2
+                            child: Icon(homeScreenController.tabIndex.value == 3
                                 ? Icons.add
                                 : Icons.search)),
                       ),
@@ -73,8 +71,8 @@ class HomeScreen extends StatelessWidget {
               : const SizedBox.shrink(),
         ),
         body: Obx(() => AnimatedScreenTransition(
-            enabled: settingsScreenController
-                .isTransitionAnimationDisabled.isFalse,
+            enabled:
+                settingsScreenController.isTransitionAnimationDisabled.isFalse,
             resverse: homeScreenController.reverseAnimationtransiton,
             horizontalTransition: true,
             child: Center(
@@ -96,7 +94,6 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeScreenController = Get.find<HomeScreenController>();
-    final settingsScreenController = Get.find<SettingsScreenController>();
     final size = MediaQuery.of(context).size;
     final topPadding = GetPlatform.isDesktop
         ? 85.0
@@ -105,7 +102,7 @@ class Body extends StatelessWidget {
             : size.height < 750
                 ? 80.0
                 : 85.0;
-    final leftPadding = 20.0;
+    const leftPadding = 20.0;
     if (homeScreenController.tabIndex.value == 0) {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding),
@@ -184,49 +181,111 @@ class Body extends StatelessWidget {
                                 .isContentFetched.value
                             ? [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20.0, top: 10.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0,
+                                      right: 15.0,
+                                      bottom: 20.0,
+                                      top: 10.0),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         _getGreeting(),
-                                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.settings),
                                         onPressed: () {
-                                          Get.toNamed(ScreenNavigationSetup.settingsScreen, id: ScreenNavigationSetup.id);
+                                          Get.toNamed(
+                                              ScreenNavigationSetup
+                                                  .settingsScreen,
+                                              id: ScreenNavigationSetup.id);
                                         },
                                       )
                                     ],
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 10.0),
                                   child: GestureDetector(
                                     onTap: () {
-                                      Get.toNamed(ScreenNavigationSetup.searchScreen,
+                                      Get.toNamed(
+                                          ScreenNavigationSetup.searchScreen,
                                           id: ScreenNavigationSetup.id);
                                     },
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 12.0),
                                       decoration: BoxDecoration(
-                                        color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary
+                                            .withOpacity(0.5),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Row(
                                         children: [
-                                          const Icon(Icons.search, color: Colors.white70),
+                                          const Icon(Icons.search,
+                                              color: Colors.white70),
                                           const SizedBox(width: 12),
                                           Text(
                                             'searchDes'.tr,
-                                            style: const TextStyle(color: Colors.white70, fontSize: 16),
+                                            style: const TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 16),
                                           ),
                                         ],
                                       ),
                                     ),
+                                  ),
+                                ),
+                                // Quick access playlists grid
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                                  child: GridView.count(
+                                    crossAxisCount: 2,
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
+                                    childAspectRatio: 3.2,
+                                    children: [
+                                      _buildQuickAccessTile(
+                                        context,
+                                        icon: Icons.history,
+                                        label: "recentlyPlayed".tr,
+                                        color: const Color(0xFF6C5CE7),
+                                        playlistId: "LIBRP",
+                                      ),
+                                      _buildQuickAccessTile(
+                                        context,
+                                        icon: Icons.favorite,
+                                        label: "favorites".tr,
+                                        color: const Color(0xFFE17055),
+                                        playlistId: "LIBFAV",
+                                      ),
+                                      _buildQuickAccessTile(
+                                        context,
+                                        icon: Icons.flight,
+                                        label: "cachedOrOffline".tr,
+                                        color: const Color(0xFF00B894),
+                                        playlistId: "SongsCache",
+                                      ),
+                                      _buildQuickAccessTile(
+                                        context,
+                                        icon: Icons.download,
+                                        label: "downloads".tr,
+                                        color: const Color(0xFF0984E3),
+                                        playlistId: "SongDownloads",
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 // Removed QuickPicksWidget per user request
@@ -265,12 +324,66 @@ class Body extends StatelessWidget {
         ),
       );
     } else if (homeScreenController.tabIndex.value == 1) {
-      return settingsScreenController.isBottomNavBarEnabled.isTrue
-          ? const CombinedLibrary()
-          : const SongsLibraryWidget();
+      return const SongsLibraryWidget(isBottomNavActive: true);
+    } else if (homeScreenController.tabIndex.value == 2) {
+      return const PlaylistNAlbumLibraryWidget(isBottomNavActive: true);
+    } else if (homeScreenController.tabIndex.value == 3) {
+      return const PlaylistNAlbumLibraryWidget(
+          isAlbumContent: false, isBottomNavActive: true);
     } else {
       return const SizedBox.shrink();
     }
+  }
+
+  Widget _buildQuickAccessTile(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required Color color,
+    required String playlistId,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          final playlist = Playlist(
+            title: label,
+            playlistId: playlistId,
+            thumbnailUrl: Playlist.thumbPlaceholderUrl,
+            isCloudPlaylist: false,
+          );
+          Get.toNamed(
+            ScreenNavigationSetup.playlistScreen,
+            id: ScreenNavigationSetup.id,
+            arguments: [playlist, playlistId],
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            children: [
+              Icon(icon, color: color, size: 24),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   List<Widget> getWidgetList(

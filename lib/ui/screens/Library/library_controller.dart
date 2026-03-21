@@ -212,28 +212,7 @@ class LibraryPlaylistsController extends GetxController
   late AnimationController controller;
 
   final playlistCreationMode = "local".obs;
-  static final initPlst = [
-    Playlist(
-        title: "recentlyPlayed".tr,
-        playlistId: "LIBRP",
-        thumbnailUrl: Playlist.thumbPlaceholderUrl,
-        isCloudPlaylist: false),
-    Playlist(
-        title: "favorites".tr,
-        playlistId: "LIBFAV",
-        thumbnailUrl: Playlist.thumbPlaceholderUrl,
-        isCloudPlaylist: false),
-    Playlist(
-        title: "cachedOrOffline".tr,
-        playlistId: "SongsCache",
-        thumbnailUrl: Playlist.thumbPlaceholderUrl,
-        isCloudPlaylist: false),
-    Playlist(
-        title: "downloads".tr,
-        playlistId: "SongDownloads",
-        thumbnailUrl: Playlist.thumbPlaceholderUrl,
-        isCloudPlaylist: false)
-  ];
+  static final initPlst = <Playlist>[];
   late RxList<Playlist> libraryPlaylists = RxList(initPlst);
   final isContentFetched = false.obs;
   final creationInProgress = false.obs;
@@ -429,9 +408,7 @@ class LibraryPlaylistsController extends GetxController
 
   void onSort(SortType sortType, bool isAscending) {
     final playlists = libraryPlaylists.toList();
-    playlists.removeRange(0, 4);
     sortPlayLists(playlists, sortType, isAscending);
-    playlists.insertAll(0, initPlst);
     libraryPlaylists.value = playlists;
   }
 

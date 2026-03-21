@@ -1915,7 +1915,7 @@ Map<String, Map<String, String>> get keys => {
     "resetToDefaultDes": "Reset app settings to default (Restart required)",
     "resetToDefaultMsg": "Settings reset to default completed, Please restart app",
     "github": "GitHub",
-    "githubDes": "View GitHub source code \nif you like this project, don't forget to give a ⭐",
+    "githubDes": "Culture shouldn't exist only for those who can afford it.",
     "by": "by",
     "urlSearchDes": "Url detected click on it to open/play associated content",
     "search": "Search",

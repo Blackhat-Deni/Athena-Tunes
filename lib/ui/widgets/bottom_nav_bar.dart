@@ -23,8 +23,19 @@ class BottomNavBar extends StatelessWidget {
                 label: modifyNgetlabel('home'.tr),
               ),
               NavigationDestination(
-                icon: const Icon(Icons.library_music),
-                label: modifyNgetlabel('library'.tr),
+                selectedIcon: const Icon(Icons.music_note),
+                icon: const Icon(Icons.music_note_outlined),
+                label: modifyNgetlabel('songs'.tr),
+              ),
+              NavigationDestination(
+                selectedIcon: const Icon(Icons.album),
+                icon: const Icon(Icons.album_outlined),
+                label: modifyNgetlabel('albums'.tr),
+              ),
+              NavigationDestination(
+                selectedIcon: const Icon(Icons.playlist_play),
+                icon: const Icon(Icons.playlist_play_outlined),
+                label: modifyNgetlabel('playlists'.tr),
               ),
             ]));
   }

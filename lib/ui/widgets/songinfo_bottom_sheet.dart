@@ -133,22 +133,6 @@ class SongInfoBottomSheet extends StatelessWidget {
                 ).whenComplete(() => Get.delete<AddToPlaylistController>());
               },
             ),
-            (calledFromPlayer || calledFromQueue)
-                ? const SizedBox.shrink()
-                : ListTile(
-                    visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.merge),
-                    title: Text("enqueueSong".tr),
-                    onTap: () {
-                      playerController.enqueueSong(song).whenComplete(() {
-                        if (!context.mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                            context, "songEnqueueAlert".tr,
-                            size: SanckBarSize.MEDIUM));
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
             song.extras!['album'] != null
                 ? ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
