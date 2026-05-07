@@ -4,7 +4,7 @@
 
 </div>
 
-<img src="https://github.com/anandnet/Harmony-Music/blob/main/cover.png" width="1200" >
+
 
 # Athena Tunes
 A cross platform app for music streaming made with Flutter (Android, Windows, Linux).
